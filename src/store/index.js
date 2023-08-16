@@ -1,11 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { todoData } from "../assets/fackData";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    initData: [],
+    initData: todoData,
   },
   getters: {},
   mutations: {
@@ -20,6 +21,13 @@ export default new Vuex.Store({
       const pushData = state.initData;
       pushData.push(data);
       state.initData = pushData;
+    },
+    removeData(state, newIndex) {
+      const rmData = state.initData.splice(newIndex, 1);
+      console.log("mutationsRemoveData-rmData =", rmData);
+      // const rm = rmData.splice(newIndex, 1);
+      // console.log("mutationsRemoveData-rm =", rm);
+      // state.initData = rmData.splice(newIndex, 1);
     },
   },
   actions: {},

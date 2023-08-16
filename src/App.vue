@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h2 class="text-3xl mb-4">TodoList：</h2>
-    <div>
+    <div class="mb-3">
       <input
         type="text"
         v-model="newTodo"
@@ -47,7 +47,7 @@
         </li>
       </ul>
     </nav>
-    <ul class="mx-32">
+    <ul class="mx-32 mb-3">
       <transition-group name="list">
         <div
           v-for="(item, index) in filteredList"
@@ -77,23 +77,29 @@
         </div>
       </transition-group>
     </ul>
+    <CountComponent v-model="valueModal"></CountComponent>
+    <div class="mt-2">我是父層的值：{{ valueModal }}</div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { todoData } from "./assets/fackData";
+import CountComponent from "./components/countComponent.vue";
 
 export default {
   name: "App",
+  components: {
+    CountComponent,
+  },
   data() {
     return {
       newTodo: "",
       visibility: "allList",
+      valueModal: 0,
     };
   },
   created() {
-    this.saveInitData();
+    //this.saveInitData();
   },
   computed: {
     ...mapState({
@@ -114,11 +120,11 @@ export default {
     },
   },
   methods: {
-    saveInitData() {
-      // console.log("saveInitData-todoData =", todoData);
+    //saveInitData() {
+    // console.log("saveInitData-todoData =", todoData);
 
-      this.$store.commit("setInitData", todoData);
-    },
+    //this.$store.commit("setInitData", todoData);
+    //},
     handleClick(e) {
       console.log("handleClick-e =", e);
       console.log("handleClick-this.items =", this.items);
@@ -150,7 +156,8 @@ export default {
       //   }
       // });
       let newIndex = this.items.findIndex((item) => todo.id === item.id);
-      this.items.splice(newIndex, 1);
+      // this.items.splice(newIndex, 1);
+      this.$store.commit("removeData", newIndex);
     },
   },
 };
